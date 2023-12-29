@@ -64,7 +64,6 @@
     killall
     pamixer
     brightnessctl
-    upower
     streamlink
     wget
     unzip
@@ -160,7 +159,7 @@
   };
   services.supergfxd.enable = true;
   systemd.services.supergfxd.path = [ pkgs.pciutils ];
-
+  services.power-profiles-daemon.enable = true;
 
 
   #gnome exclusive services
