@@ -50,7 +50,7 @@
 
     xserver = {
       enable = true;
-      desktopManager.gnome.enable = true;
+      desktopManager.plasma6.enable = true;
       displayManager.gdm.enable = true;
       videoDrivers = [ "nvidia" ];
        # Enable touchpad support (enabled default in most desktopManager).
@@ -89,7 +89,7 @@
   #bootloader
   boot = {
     kernelPackages = pkgs.linuxPackages_latest; #most update kernel   
-    kernelParams = ["quiet" "splash" "video=DP-6:1920x1080@239.76" "video=DP-2:1920x1080@239.76" "amdgpu.dcdebugmask=0x10"];
+    kernelParams = ["quiet" "splash" "video=DP-6:1920x1080@165" "video=DP-2:1920x1080@165" "amdgpu.dcdebugmask=0x10"];
     #splash
     plymouth = {
       enable = true;

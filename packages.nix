@@ -10,51 +10,6 @@
   
   
   
-  # And ensure gnome-settings-daemon udev rules are enabled 
-  services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
-
-  #minimal gnome
-  environment.gnome.excludePackages = (with pkgs; [
-    #gnome-console
-    #gnome-text-editor
-    #snapshot
-    #loupe
-    gnome-photos
-    gnome-tour
-    gnome-connections
-    simple-scan
-    gnome-usage
-  ]) ++ 
-  (with pkgs.gnome; [
-    #gnome-calculator
-    gnome-system-monitor
-    #file-roller
-    #baobab
-    cheese
-    #gnome-disk-utility
-    gnome-logs
-    seahorse
-    eog
-    gnome-maps
-    gnome-font-viewer
-    yelp
-    gnome-calendar
-    gnome-contacts
-    gnome-music
-    gnome-software
-    epiphany # web browser
-    geary # email reader
-    evince # document viewer
-    gnome-characters
-    gnome-weather 
-    gnome-clocks
-    totem # video player
-    tali # poker game
-    iagno # go game
-    hitori # sudoku game
-    atomix # puzzle game
-  ]);
-  
   
 
   services.xserver.excludePackages = (with pkgs; [ 
@@ -64,15 +19,7 @@
   environment.systemPackages = with pkgs; [
     
 
-    #gnome exclusive
-    switcheroo-control #dbus for dual gpu
-    gnomeExtensions.blur-my-shell
-    gnomeExtensions.appindicator
-    gnomeExtensions.dash-to-dock
-    gnomeExtensions.supergfxctl-gex
-    gnomeExtensions.screen-rotate # 2 in 1 extension
-    gnome.gnome-tweaks
-    
+  
 	    
     #video player
     celluloid
