@@ -16,12 +16,15 @@
     	inputs.nixpkgs.follows = "nixpkgs";
     };
 
-     
+    wsl = {
+	url = "github:nix-community/NixOS-WSL/main";
+	inputs.nixpkgs.follows = "nixpkgs";
+    }; 
     
     
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, nixvim, asusctl, ... }: {
+  outputs = inputs@{ nixpkgs, home-manager, nixvim, asusctl, wsl, ... }: {
     nixosConfigurations = {
       nixos = inputs.nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
@@ -39,7 +42,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users = {
-                samuel = import ./home.nix; 
+                nixos = import ./home.nix; 
               };
             };
           }
