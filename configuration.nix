@@ -7,15 +7,32 @@
   ];
 
   wsl.enable = true;
-  wsl.defaultUser = "nixos";
+  wsl.defaultUser = "samuel";
+ 
 
-  users.users.nixos.shell = pkgs.zsh;
-  
+  users = {
+    mutableUsers = true;
+    groups = {
+      samuel.gid = 1000;
+    };
+   
+    users.samuel = {
+      isNormalUser = true;
+      home = "/home/samuel";
+      shell = pkgs.zsh;
+      uid = 1000;
+      group = "samuel";
+      extraGroups = [ "wheel" "networkmanager" /*"libvirtd"*/ ]; # Enable ‘sudo’ for the user.
+    };
+  };
+
+    
+
   environment = {
     shells = with pkgs; [ zsh bash dash ];
     binsh = "${pkgs.dash}/bin/dash";
 
-    sessionVariables = rec {
+    sessionVariables = {
       NIXOS_OZONE_WL = "1";
       XDG_CACHE_HOME  = "$HOME/.cache";
       XDG_CONFIG_HOME = "$HOME/.config";

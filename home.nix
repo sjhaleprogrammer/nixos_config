@@ -4,12 +4,15 @@
 
 {
 
-  # Let home Manager install and manage itself.
+    # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+ 
+  
+  
 
-  home.username = "nixos";
-  home.homeDirectory = "/home/nixos";
+  home.username = "samuel";
+  home.homeDirectory = "/home/samuel";
   home.stateVersion = "23.05";
   
   
@@ -152,7 +155,7 @@
     };
 
     initExtra = ''
-      (cat /home/nixos/.cache/wal/sequences &)
+      (cat /home/samuel/.cache/wal/sequences &)
       eval "$(starship init zsh)"
     '';
   };
