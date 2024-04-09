@@ -5,9 +5,10 @@
     programs.nixvim = {
 	enable = true;
 
-
+	
         clipboard.providers.wl-copy.enable = true;
 	
+	colorschemes.dracula.enable = true;
 
 	opts = {
 	   number = true;         # Show line numbers
