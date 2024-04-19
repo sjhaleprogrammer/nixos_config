@@ -22,7 +22,7 @@
       shell = pkgs.zsh;
       uid = 1000;
       group = "samuel";
-      extraGroups = [ "wheel" "networkmanager" /*"libvirtd"*/ ]; # Enable ‘sudo’ for the user.
+      extraGroups = [ "wheel" "networkmanager"  ]; 
     };
   };
 
