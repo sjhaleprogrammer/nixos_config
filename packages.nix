@@ -13,10 +13,7 @@
   environment.systemPackages = with pkgs; [
     
 
-   
-
     #libraries
-    ntfs3g
     linuxHeaders
     linux-firmware
     fakeroot
@@ -30,7 +27,6 @@
     pamixer
     brightnessctl
     upower
-    streamlink
     wget
     unzip
     time
@@ -38,7 +34,7 @@
     rsync
     ripgrep
     fzf
-    neofetch
+    fastfetch
     mpc-cli
     mlocate
     inotify-tools
@@ -59,24 +55,10 @@
     mediainfo
     imagemagick
     libnotify
-    mangohud
     
     
-    
-    #virtual machines
-    /*
-    virt-manager
-    spice spice-gtk
-    spice-protocol
-    win-virtio
-    win-spice
-    */
-
-   
-      
 
     
-
   ];
 
 
