@@ -6,8 +6,15 @@
     inputs.wsl.nixosModules.wsl
   ];
 
-  wsl.enable = true;
-  wsl.defaultUser = "samuel";
+
+
+  wsl = {
+    enable = true;
+    defaultUser = "samuel";
+    nativeSystemd = true;
+    useWindowsDriver = true;
+    startMenuLaunchers = true;
+  };
  
 
   users = {
@@ -26,11 +33,29 @@
     };
   };
 
-    
+  boot.extraModulePackages = [config.boot.kernelPackages.wireguard]; 
+
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+
+    extraPackages = with pkgs; [
+      mesa.drivers
+      libvdpau-va-gl
+      vaapiVdpau
+    ];
+  };
 
   environment = {
     shells = with pkgs; [ zsh bash dash ];
     binsh = "${pkgs.dash}/bin/dash";
+    
+    variables = {
+      NIX_LD_LIBRARY_PATH = lib.makeLibraryPath [
+        pkgs.stdenv.cc.cc
+      ];
+      NIX_LD = "${pkgs.glibc}/lib/ld-linux-x86-64.so.2";
+    };
 
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
@@ -47,6 +72,14 @@
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  programs.nix-ld = {
+    enable = true;
+    # I am using this nix-ld-rs too:
+    #   package = nix-ld-rs.packages."${pkgs.system}".nix-ld-rs;
+  };
+
+ 
 
   programs.zsh.enable = true;
    	

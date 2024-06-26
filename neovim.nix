@@ -52,7 +52,7 @@
 		pyright.enable = true;
 		tsserver.enable = true;
 		#rust-analyzer.enable = true;
-		nil_ls.enable = true;
+		nil-ls.enable = true;
 		clangd.enable = true;
 		java-language-server.enable = true;
 	    };

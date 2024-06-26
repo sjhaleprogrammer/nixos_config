@@ -2,17 +2,15 @@
   description = "Flake for building my gnome system";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
       
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     
-    nixvim = {
-    	url = "github:nix-community/nixvim/main";
-    	inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixvim.url = "github:nix-community/nixvim/main";
+    
 
     wsl = {
 	url = "github:nix-community/NixOS-WSL/main";
