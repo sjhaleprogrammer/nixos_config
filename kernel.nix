@@ -1,4 +1,4 @@
-{config, pkgs, ...}: {
+{config, pkgs, lib, ...}: {
 
 
     boot = {
@@ -58,6 +58,12 @@
 		  tail -n $TAIL_LINES ./Makefile >> ./Makefile2
 		  mv ./Makefile2 ./Makefile
 		'';
+	      };
+
+	      structuredExtraConfig = with lib.kernel; {
+		HID_ASUS_ALLY = module;
+		ASUS_ARMOURY = module;
+		ASUS_WMI_BIOS = yes;
 	      };
 	      	    
 	    } // (args.argsOverride or {}));
