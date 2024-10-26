@@ -42,6 +42,9 @@ with lib.hm.wt;
     }; 
   }; 
   
+  programs.direnv = {
+	enable = true;
+  };
 
   gtk = {
     enable = true;

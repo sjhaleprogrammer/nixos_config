@@ -2,7 +2,9 @@
 
 
     boot = {
-	
+
+	kernelPackages = pkgs.linuxPackages_testing;
+	/*
         kernelPackages = pkgs.lib.mkDefault (let
 	 fedora-asus-kernel = {buildLinux, ...} @ args:
 	   buildLinux (args
@@ -70,6 +72,7 @@
 	    linux_g14 = pkgs.callPackage fedora-asus-kernel {};
 	   in
 	    pkgs.recurseIntoAttrs (pkgs.linuxPackagesFor linux_g14));
+	    */
 			
 	
 
