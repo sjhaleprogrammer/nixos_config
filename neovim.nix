@@ -49,14 +49,15 @@
 	  lsp = {
 	    enable = true;
 	    servers = {
-		astro.enable = true;
-		html.enable = true;
-		pyright.enable = true;
-		tsserver.enable = true;
-		#rust-analyzer.enable = true;
-		nil-ls.enable = true;
-		clangd.enable = true;
-		java-language-server.enable = true;
+	        prolog_ls.enable = true;
+          astro.enable = true;
+          html.enable = true;
+          pyright.enable = true;
+          tsserver.enable = true;
+          #rust-analyzer.enable = true;
+          nil-ls.enable = true;
+          clangd.enable = true;
+          java-language-server.enable = true;
 	    };
 
 	  };

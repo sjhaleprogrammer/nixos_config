@@ -1,6 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, pkgs-unstable, lib, inputs, ... }:
 
-with lib.hm.wt;
+
 
 {
 
@@ -26,7 +26,30 @@ with lib.hm.wt;
     };
 
   };
-
+  
+  
+  #neovim
+  imports = [
+    inputs.nvchad4nix.homeManagerModule
+  ];
+  programs.nvchad = {
+    enable = true;
+    neovim = pkgs-unstable.neovim; 
+    extraPackages = with pkgs; [
+      nodePackages.bash-language-server
+      docker-compose-language-service
+      dockerfile-language-server-nodejs
+      emmet-language-server
+      nixd
+      (python3.withPackages(ps: with ps; [
+        python-lsp-server
+        flake8
+      ]))
+    ];
+    hm-activation = true;
+    backup = true;
+  };
+  
 
 
   programs.zsh = {
@@ -100,9 +123,6 @@ with lib.hm.wt;
       "https://github.com/manu-mannattil/adwaita-cursors/releases/download/v1.2/adwaita-cursors.tar.gz"
       "sha256-zKa55zn4UO/cCTx2Es0xKxUwjFe5/k5xWI9RLJYpvsQ="
       "Adwaita";
-
-
-
 
 
 

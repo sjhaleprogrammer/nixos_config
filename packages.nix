@@ -178,7 +178,8 @@
     gnomeExtensions.vitals
     gnome.gnome-tweaks
 
-
+    
+    vscode
     #video player
     celluloid
 
