@@ -23,69 +23,54 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/master";
-    #nixvim.url = "github:nix-community/nixvim/nixos-24.05";
 
-    nvchad4nix = {
-      url = "github:nix-community/nix4nvchad";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nixvim = {
+        url = "github:nix-community/nixvim/nixos-24.05";
+        inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-
     
-
   };
 
-  outputs = { nixpkgs, home-manager, nvchad4nix, nixpkgs-unstable, /*nixvim*/ ... }@inputs: 
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
-      extraSpecialArgs = { inherit system; inherit inputs; };  # <- passing inputs to the attribute set for home-manager
-      specialArgs = { inherit system; inherit inputs; };       # <- passing inputs to the attribute set for NixOS (optional)
-    in {
+  outputs = { nixpkgs, home-manager, nixvim, nixpkgs-unstable, ... }@inputs:
+
+  let
+    system = "x86_64-linux";
+    pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
+    pkgs-unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
+    # Define arguments to be passed into various configurations
+    extraSpecialArgs = { inherit system inputs; };
+  in {
     nixosConfigurations = {
-      
       nixos = inputs.nixpkgs.lib.nixosSystem {
         modules = [
-	  
           ./configuration.nix
-	  ./kernel.nix
+          ./kernel.nix
           /etc/nixos/hardware-configuration.nix
           ./packages.nix
+          ./virtualization.nix
 
-          #relies on nixvim input 
-          #./neovim.nix
+          nixvim.nixosModules.nixvim 
+          ./neovim.nix
 
 
-	  ./virtualization.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.samuel = import ./home.nix;
-	      extraSpecialArgs = { 
-	      	inherit inputs;
-		pkgs-unstable = import nixpkgs-unstable { 
-		  inherit system;
-		  config.allowUnfree = true;
-	        };
-	      };
+          # Home Manager configuration
+          home-manager.nixosModules.home-manager{
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.samuel = import ./home.nix {
+              inherit pkgs pkgs-unstable inputs;
             };
           }
-
         ];
-
-
       };
     };
-
   };
+ 
 
 
 }

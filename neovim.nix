@@ -1,8 +1,7 @@
 { inputs, pkgs, ... }:
 
 {
-  imports = [ inputs.nixvim.nixosModules.nixvim ];
-  
+    
   programs.nixvim = {
     enable = true;
 
@@ -19,48 +18,48 @@
 
     plugins = {
 	 
-	  airline.enable = true;
+	   airline.enable = true;
 
-	  cmp.enable = true;
-	  cmp_luasnip.enable = true;
-	  cmp-nvim-lsp.enable = true;
-	  cmp-buffer.enable = true;
-	  cmp-path.enable = true;
-	  cmp-cmdline.enable = true;
+	   cmp.enable = true;
+	   cmp_luasnip.enable = true;
+	   cmp-nvim-lsp.enable = true;
+	   cmp-buffer.enable = true;
+	   cmp-path.enable = true;
+	   cmp-cmdline.enable = true;
 
 
 
-	  gitsigns.enable = true;  
+	   gitsigns.enable = true;  
 
-	  nvim-tree.enable = true;
+	   nvim-tree.enable = true;
 
-	  telescope.enable = true;
+	   telescope.enable = true;
 	  
-	  codeium-vim.enable = true;
+	   codeium-vim.enable = true;
 
-          treesitter = {
-	          enable = true;
-		  gccPackage = pkgs.gcc;
-          };
+     treesitter = {
+       enable = true;
+       gccPackage = pkgs.gcc;
+     };
 	
 	  
 	
 
-	  lsp = {
-	    enable = true;
-	    servers = {
-	        prolog_ls.enable = true;
-          astro.enable = true;
-          html.enable = true;
-          pyright.enable = true;
-          tsserver.enable = true;
-          #rust-analyzer.enable = true;
-          nil-ls.enable = true;
-          clangd.enable = true;
-          java-language-server.enable = true;
-	    };
+	   lsp = {
+        enable = true;
+        servers = {
+            prolog-ls.enable = true;
+            astro.enable = true;
+            html.enable = true;
+            pyright.enable = true;
+            tsserver.enable = true;
+            #rust-analyzer.enable = true;
+            nil-ls.enable = true;
+            clangd.enable = true;
+            java-language-server.enable = true;
+        };
 
-	  };
+	   };
 
     };
 

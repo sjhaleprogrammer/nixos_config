@@ -179,7 +179,7 @@
     gnome.gnome-tweaks
 
     
-    vscode
+   
     #video player
     celluloid
 
