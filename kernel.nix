@@ -3,7 +3,7 @@
 
     boot = {
 
-	kernelPackages = pkgs.linuxPackages_testing;
+	kernelPackages = pkgs.linuxPackages_latest;
 	/*
         kernelPackages = pkgs.lib.mkDefault (let
 	 fedora-asus-kernel = {buildLinux, ...} @ args:

@@ -22,12 +22,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/master";
-
-    nixvim = {
-        url = "github:nix-community/nixvim/nixos-24.05";
-        inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
@@ -36,27 +31,24 @@
     
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, nixpkgs-unstable, ... }@inputs:
+  outputs = { nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:
 
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
     pkgs-unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
-    # Define arguments to be passed into various configurations
-    extraSpecialArgs = { inherit system inputs; };
   in {
     nixosConfigurations = {
       nixos = inputs.nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit pkgs pkgs-unstable; };
         modules = [
           ./configuration.nix
           ./kernel.nix
           /etc/nixos/hardware-configuration.nix
           ./packages.nix
           ./virtualization.nix
-
-          nixvim.nixosModules.nixvim 
-          ./neovim.nix
-
+	  ./neovim.nix 
+	            
 
           # Home Manager configuration
           home-manager.nixosModules.home-manager{

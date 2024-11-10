@@ -74,8 +74,6 @@
       two-finger-scrolling-enabled = true;
     };
 
-
-
   };
 
   home.pointerCursor =
