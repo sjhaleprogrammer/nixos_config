@@ -1,7 +1,6 @@
-{ pkgs,config, ... }:
+{ pkgs, config, lib, ... }:
 
 {
-
 
   system = {
     stateVersion = "23.05";
@@ -13,23 +12,18 @@
 
   };
 
-
   nix = {
 
     gc = {
-	automatic = true;
-	dates = "weekly";
-	options = "--delete-older-than 14d";
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 14d";
     };
 
     #optimise.automatic = true;
     settings.experimental-features = [ "nix-command" "flakes" ];
 
   };
-
-
-
-
 
   environment = {
     shells = with pkgs; [ zsh bash dash ];
@@ -44,14 +38,10 @@
 
       # Not officially in the specification
       XDG_BIN_HOME = "$HOME/.local/bin";
-      PATH = [
-        "${XDG_BIN_HOME}"
-      ];
+      PATH = [ "${XDG_BIN_HOME}" ];
     };
 
   };
-
-
 
   services = {
 
@@ -59,11 +49,11 @@
       enable = true;
       desktopManager.gnome.enable = true;
       displayManager.gdm = {
-	enable = true;
-	wayland = true;
+        enable = true;
+        wayland = true;
       };
       videoDrivers = [ "nvidia" ];
-            
+
     };
 
     #sound
@@ -76,7 +66,7 @@
       jack.enable = true;
       wireplumber.enable = true;
     };
-    
+
     #touchpad
     libinput.enable = true;
 
@@ -92,13 +82,10 @@
     #KbdInteractiveAuthentication = false;
     #};
 
-
-
   };
 
-
   #bootloader
-  boot = { 
+  boot = {
     loader = {
       systemd-boot.enable = false;
       grub = {
@@ -113,9 +100,8 @@
         efiSysMountPoint = "/boot";
       };
     };
-    
-  };
 
+  };
 
   hardware = {
 
@@ -123,30 +109,27 @@
       enable = true;
       driSupport32Bit = true;
 
-      extraPackages = with pkgs; [
-        rocm-opencl-icd
-        rocm-opencl-runtime
-      ];
+      extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
 
     };
 
-    nvidia =  {
+    nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-	    version = "550.127.05";
-	    sha256_64bit = "sha256-04TzT10qiWvXU20962ptlz2AlKOtSFocLuO/UZIIauk=";
-	    sha256_aarch64 = "sha256-mVEeFWHOFyhl3TGx1xy5EhnIS/nRMooQ3+LdyGe69TQ=";
-	    openSha256 = "sha256-Po+pASZdBaNDeu5h8sgYgP9YyFAm9ywf/8iyyAaLm+w=";
-	    settingsSha256 = "sha256-cUSOTsueqkqYq3Z4/KEnLpTJAryML4Tk7jco/ONsvyg=";
-	    persistencedSha256 = "sha256-Vz33gNYapQ4++hMqH3zBB4MyjxLxwasvLzUJsCcyY4k=";
+        version = "560.35.03";
+        sha256_64bit = "sha256-8pMskvrdQ8WyNBvkU/xPc/CtcYXCa7ekP73oGuKfH+M=";
+        sha256_aarch64 = "sha256-xctt4TPRlOJ6r5S54h5W6PT6/3Zy2R4ASNFPu8TSHKM=";
+        openSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
+        settingsSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
+        persistencedSha256 = lib.fakeSha256;
+
       };
       modesetting.enable = true;
       open = false;
-      nvidiaSettings = true;
+      nvidiaSettings = false;
       #dynamicBoost.enable = true;
       #powerManagement.enable = true;
       powerManagement.finegrained = true;
       #nvidiaPersistenced = true;
-
 
       prime = {
         offload = {
@@ -170,11 +153,11 @@
 
   };
 
-
   networking = {
 
     hostName = "nixos"; # Define your hostname.
-    networkmanager.enable = true; # Easiest to use and most distros use this by default.
+    networkmanager.enable =
+      true; # Easiest to use and most distros use this by default.
     enableIPv6 = true;
 
     nat = {
@@ -190,10 +173,7 @@
       #allowedUDPPorts = [ 53 51820 ];
     };
 
-
   };
-
-
 
   #time 
   time.timeZone = "America/New_York";
@@ -204,17 +184,12 @@
     keyMap = "us";
   };
 
-
-
-
   programs.zsh.enable = true;
 
   #users
   users = {
     mutableUsers = true;
-    groups = {
-      samuel.gid = 1000;
-    };
+    groups = { samuel.gid = 1000; };
 
     users.samuel = {
       isNormalUser = true;
@@ -222,17 +197,15 @@
       shell = pkgs.zsh;
       uid = 1000;
       group = "samuel";
-      extraGroups = [ "wheel" "networkmanager" "gamemode" ]; # Enable ‘sudo’ for the user.
+      extraGroups =
+        [ "wheel" "networkmanager" "gamemode" ]; # Enable ‘sudo’ for the user.
     };
   };
-
-
 
   swapDevices = [{
     device = "/var/lib/swapfile";
     size = 32 * 1024;
   }];
-
 
   security = {
 
@@ -259,17 +232,23 @@
 
     #emulator memory
     pam.loginLimits = [
-      { domain = "*"; type = "hard"; item = "memlock"; value = "unlimited"; }
-      { domain = "*"; type = "soft"; item = "memlock"; value = "unlimited"; }
+      {
+        domain = "*";
+        type = "hard";
+        item = "memlock";
+        value = "unlimited";
+      }
+      {
+        domain = "*";
+        type = "soft";
+        item = "memlock";
+        value = "unlimited";
+      }
     ];
 
     #sound
     rtkit.enable = true;
 
   };
-
-
-
-
 
 }

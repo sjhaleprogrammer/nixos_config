@@ -1,5 +1,6 @@
 local cmp = require('cmp')
 
+require("codeium").setup({})
 cmp.setup({
 	snippet = {
 	        -- REQUIRED - you must specify a snippet engine
@@ -29,7 +30,7 @@ cmp.setup({
 	        -- { name = 'ultisnips' }, -- For ultisnips users.
 	        -- { name = 'snippy' }, -- For snippy users.
 	        }, {
-	                { name = 'buffer' },
+	                { name = 'buffer' }, { name = "codeium" },
 	        })
 })
 
@@ -117,18 +118,53 @@ dracula.setup({
 
 
 
+require('telescope').setup{
+  defaults = {
+    -- Default configuration for telescope goes here:
+    -- config_key = value,
+    mappings = {
+      i = {
+        -- map actions.which_key to <C-h> (default: <C-/>)
+        -- actions.which_key shows the mappings for your picker,
+        -- e.g. git_{create, delete, ...}_branch for the git_branches picker
+        ["<C-h>"] = "which_key"
+      }
+    }
+  },
+  pickers = {
+    -- Default configuration for builtin pickers goes here:
+    -- picker_name = {
+    --   picker_config_key = value,
+    --   ...
+    -- }
+    -- Now the picker_config_key will be applied every time you call this
+    -- builtin picker
+  },
+  extensions = {
+    -- Your extension configuration goes here:
+    -- extension_name = {
+    --   extension_config_key = value,
+    -- }
+    -- please take a look at the readme of the extension you want to configure
+  }
+}
+
+require("telescope").load_extension("scope")
+require("scope")
+
+
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.nil_ls.setup{}
 require'lspconfig'.lua_ls.setup{}
-
+require'lspconfig'.clangd.setup{}
 
 
 require("conform").setup({
   formatters_by_ft = {
     nix = { "nixfmt" },
     python = { "isort", "black" },
+    c = { "clang-format" },
     ["*"] = { "codespell" },
-    
   },
   format_on_save = {
     -- These options will be passed to conform.format()
@@ -136,3 +172,7 @@ require("conform").setup({
     lsp_format = "fallback",
   },
 })
+
+
+
+

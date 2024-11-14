@@ -31,6 +31,7 @@
       packages.myVimPackage = with pkgs.vimPlugins; {
         start = [
 
+          scope-nvim
           dracula-nvim
           airline
 
@@ -49,8 +50,11 @@
           telescope-nvim
           codeium-nvim
           conform-nvim
-          nvim-treesitter
+          nvim-treesitter.withAllGrammars
           nvim-lspconfig
+
+          blamer-nvim
+          lazygit-nvim
 
         ];
       };
@@ -59,21 +63,31 @@
   };
 
   environment.systemPackages = with pkgs; [
+    #deps
     wl-clipboard
     gcc
     tree-sitter
     nodejs-slim
+    codeium
+    lazygit
 
-    #ls
+    #python
     pyright
+    black
+    isort
+
+    #nix 
     nil
+    nixfmt-classic
+
+    # lua
     lua-language-server
 
-    #formatters
-    nixfmt-classic
+    # codespell    
     codespell
-    isort
-    black
+
+    # C/C++
+    clang-tools
 
   ];
 
