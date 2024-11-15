@@ -9,9 +9,6 @@
   home.homeDirectory = "/home/samuel";
   home.stateVersion = "23.05";
 
-  #fuck u nvidia
-  home.sessionVariables = { GSK_RENDERER = "gl"; };
-
   # basic configuration of git, please change to your own
   programs.git = {
     enable = true;

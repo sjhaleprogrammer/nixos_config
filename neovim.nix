@@ -78,10 +78,11 @@
 
     #nix 
     nil
-    nixfmt-classic
+    nixfmt-rfc-style
 
     # lua
     lua-language-server
+    stylua
 
     # codespell    
     codespell

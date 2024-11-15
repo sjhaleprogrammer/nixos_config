@@ -50,7 +50,7 @@
     atomix # puzzle game
   ]);
 
-  #services.xserver.excludePackages = (with pkgs; [ xterm ]);
+  services.xserver.excludePackages = (with pkgs; [ xterm ]);
 
   environment.systemPackages = with pkgs; [
 
