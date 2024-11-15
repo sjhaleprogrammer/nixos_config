@@ -105,27 +105,30 @@
 
   hardware = {
 
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport32Bit = true;
-
-      extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
-
+      enable32Bit = true;
+      extraPackages = with pkgs; [
+        rocmPackages.clr.icd
+        amdvlk
+        driversi686Linux.amdvlk
+      ];
     };
 
     nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-        version = "560.35.03";
-        sha256_64bit = "sha256-8pMskvrdQ8WyNBvkU/xPc/CtcYXCa7ekP73oGuKfH+M=";
-        sha256_aarch64 = "sha256-xctt4TPRlOJ6r5S54h5W6PT6/3Zy2R4ASNFPu8TSHKM=";
-        openSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
-        settingsSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
-        persistencedSha256 = lib.fakeSha256;
+      /* package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+           version = "560.35.03";
+           sha256_64bit = "sha256-8pMskvrdQ8WyNBvkU/xPc/CtcYXCa7ekP73oGuKfH+M=";
+           sha256_aarch64 = "sha256-xctt4TPRlOJ6r5S54h5W6PT6/3Zy2R4ASNFPu8TSHKM=";
+           openSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
+           settingsSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
+           persistencedSha256 = lib.fakeSha256;
+         };
+      */
 
-      };
       modesetting.enable = true;
       open = false;
-      nvidiaSettings = false;
+      nvidiaSettings = true;
       #dynamicBoost.enable = true;
       #powerManagement.enable = true;
       powerManagement.finegrained = true;
