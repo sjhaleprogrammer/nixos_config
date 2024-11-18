@@ -1,7 +1,12 @@
-{ pkgs, inputs, system, lib, ... }:
+{
+  pkgs,
+  ...
+}:
 
 {
   nixpkgs.config.allowUnfree = true;
+
+  nixpkgs.overlays = [ ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -10,45 +15,47 @@
   services.udev.packages = with pkgs; [ gnome-settings-daemon ];
 
   #minimal gnome
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-console
-    #gnome-text-editor
-    #snapshot
-    #loupe
-    gnome-photos
-    gnome-tour
-    gnome-connections
-    simple-scan
-    gnome-usage
-  ]) ++ (with pkgs; [
-    #gnome-calculator
-    gnome-system-monitor
-    #file-roller
-    #baobab
-    cheese
-    #gnome-disk-utility
-    gnome-logs
-    seahorse
-    eog
-    gnome-maps
-    gnome-font-viewer
-    yelp
-    gnome-calendar
-    gnome-contacts
-    gnome-music
-    gnome-software
-    epiphany # web browser
-    geary # email reader
-    evince # document viewer
-    gnome-characters
-    gnome-weather
-    gnome-clocks
-    totem # video player
-    tali # poker game
-    iagno # go game
-    hitori # sudoku game
-    atomix # puzzle game
-  ]);
+  environment.gnome.excludePackages =
+    (with pkgs; [
+      gnome-console
+      #gnome-text-editor
+      #snapshot
+      #loupe
+      gnome-photos
+      gnome-tour
+      gnome-connections
+      simple-scan
+      gnome-usage
+    ])
+    ++ (with pkgs; [
+      #gnome-calculator
+      gnome-system-monitor
+      #file-roller
+      #baobab
+      cheese
+      #gnome-disk-utility
+      gnome-logs
+      seahorse
+      eog
+      gnome-maps
+      gnome-font-viewer
+      yelp
+      gnome-calendar
+      gnome-contacts
+      gnome-music
+      gnome-software
+      epiphany # web browser
+      geary # email reader
+      evince # document viewer
+      gnome-characters
+      gnome-weather
+      gnome-clocks
+      totem # video player
+      tali # poker game
+      iagno # go game
+      hitori # sudoku game
+      atomix # puzzle game
+    ]);
 
   services.xserver.excludePackages = (with pkgs; [ xterm ]);
 
@@ -141,17 +148,6 @@
 
   ];
 
-  programs = {
-    gamemode.enable = true;
-    steam = {
-      enable = true;
-      remotePlay.openFirewall =
-        true; # Open ports in the firewall for Steam Remote Play
-      dedicatedServer.openFirewall =
-        true; # Open ports in the firewall for Source Dedicated Server
-    };
-  };
-
   fonts.packages = with pkgs; [
     font-awesome
     iosevka
@@ -182,7 +178,10 @@
     };
   };
 
-  systemd.services.supergfxd.path = [ pkgs.pciutils pkgs.lsof ];
+  systemd.services.supergfxd.path = [
+    pkgs.pciutils
+    pkgs.lsof
+  ];
 
   #gnome exclusive services
   services.switcherooControl.enable = true;

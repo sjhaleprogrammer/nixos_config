@@ -13,8 +13,7 @@
         luafile ${./neovim.lua}
 
         set number
-        set shiftwidth=8
-        set tabstop=8
+
         set expandtab
         set smartindent
 

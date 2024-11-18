@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 
 {
 
@@ -21,16 +26,25 @@
     };
 
     #optimise.automatic = true;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
 
   };
 
   environment = {
-    shells = with pkgs; [ zsh bash dash ];
+    shells = with pkgs; [
+      zsh
+      bash
+      dash
+    ];
     binsh = "${pkgs.dash}/bin/dash";
 
     sessionVariables = rec {
-      NIXOS_OZONE_WL = "1";
+      NIXOS_OZONE_WL = "1"; # Most Electron Applications
+      USE_WAYLAND = "1"; # ArmCord
+
       XDG_CACHE_HOME = "$HOME/.cache";
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_DATA_HOME = "$HOME/.local/share";
@@ -156,8 +170,7 @@
   networking = {
 
     hostName = "nixos"; # Define your hostname.
-    networkmanager.enable =
-      true; # Easiest to use and most distros use this by default.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
     enableIPv6 = true;
 
     nat = {
@@ -189,7 +202,9 @@
   #users
   users = {
     mutableUsers = true;
-    groups = { samuel.gid = 1000; };
+    groups = {
+      samuel.gid = 1000;
+    };
 
     users.samuel = {
       isNormalUser = true;
@@ -197,37 +212,44 @@
       shell = pkgs.zsh;
       uid = 1000;
       group = "samuel";
-      extraGroups =
-        [ "wheel" "networkmanager" "gamemode" ]; # Enable ‘sudo’ for the user.
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+        "gamemode"
+      ]; # Enable ‘sudo’ for the user.
     };
   };
 
-  swapDevices = [{
-    device = "/var/lib/swapfile";
-    size = 32 * 1024;
-  }];
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 32 * 1024;
+    }
+  ];
 
   security = {
 
     sudo = {
       enable = true;
-      extraRules = [{
-        commands = [
-          {
-            command = "${pkgs.systemd}/bin/systemctl suspend";
-            options = [ "NOPASSWD" ];
-          }
-          {
-            command = "${pkgs.systemd}/bin/reboot";
-            options = [ "NOPASSWD" ];
-          }
-          {
-            command = "${pkgs.systemd}/bin/poweroff";
-            options = [ "NOPASSWD" ];
-          }
-        ];
-        groups = [ "wheel" ];
-      }];
+      extraRules = [
+        {
+          commands = [
+            {
+              command = "${pkgs.systemd}/bin/systemctl suspend";
+              options = [ "NOPASSWD" ];
+            }
+            {
+              command = "${pkgs.systemd}/bin/reboot";
+              options = [ "NOPASSWD" ];
+            }
+            {
+              command = "${pkgs.systemd}/bin/poweroff";
+              options = [ "NOPASSWD" ];
+            }
+          ];
+          groups = [ "wheel" ];
+        }
+      ];
     };
 
     #emulator memory
